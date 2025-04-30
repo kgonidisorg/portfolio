@@ -1,9 +1,8 @@
-name: Build and Push to GHCR
+name: Build and Push Multi-Arch Docker Image
 
 on:
   push:
-    branches:
-      - main  # adjust as needed
+    branches: [main]
 
 jobs:
   docker:
@@ -11,11 +10,14 @@ jobs:
 
     permissions:
       contents: read
-      packages: write  # required for pushing to ghcr.io
+      packages: write  # for GHCR
 
     steps:
-      - name: Checkout code
+      - name: Checkout source
         uses: actions/checkout@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
 
       - name: Log in to GitHub Container Registry
         uses: docker/login-action@v3
@@ -24,8 +26,10 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build Docker image
-        run: docker build -t ghcr.io/kgonidis/portfolio:latest .
-
-      - name: Push Docker image
-        run: docker push ghcr.io/kgonidis/portfolio:latest
+      - name: Build and push multi-arch image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: ghcr.io/kgonidis/myapp:latest

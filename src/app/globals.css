@@ -10,6 +10,18 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --color-primary: #0f172a; /* Midnight Blue */
+  --color-accent: #38bdf8; /* Sky Blue */
+  --color-muted: #f1f5f9; /* Cool Gray */
+  --color-secondary: #64748b; /* Slate */
+  --color-success: #10b981; /* Emerald */
+  --color-dark: #1e293b; /* Charcoal */
+  --color-complementary-primary: #f97316; /* Vibrant Orange */
+  --color-complementary-secondary: #fbbf24; /* Mellow Orange */
+  --color-complementary-accent: #ffedd5; /* Light Peach */
+  --color-complementary-muted: #fff7ed; /* Light Orange */
+  --color-complementary-dark: #9a3412; /* Deep Orange */
+  --color-complementary-success: #bbf7d0; /* Light Green */
 }
 
 @media (prefers-color-scheme: dark) {

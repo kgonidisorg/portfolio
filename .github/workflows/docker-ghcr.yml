@@ -32,4 +32,4 @@ jobs:
           context: .
           platforms: linux/amd64,linux/arm64
           push: true
-          tags: ghcr.io/kgonidis/myapp:latest
+          tags: ghcr.io/kgonidis/portfolio:latest

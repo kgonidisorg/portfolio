@@ -1,6 +1,5 @@
 "use client";
 import React from "react";
-import MovingBackground from "./particle";
 
 const Hero: React.FC = () => {
     // const handleScroll = (id: string) => {

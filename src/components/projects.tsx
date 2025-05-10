@@ -10,16 +10,6 @@ import "swiper/css/effect-coverflow";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 
-const frameworkSkills = Object.keys(frameworks).reduce<string[]>((acc, key) => {
-    const skills = Object.keys(frameworks[key]);
-    skills.forEach((skill) => {
-        if (!acc.includes(skill)) {
-            acc.push(skill);
-        }
-    });
-    return acc;
-}, []);
-
 const ProjectsPage: React.FC = () => {
     const projectsValues = Object.values(projects);
 

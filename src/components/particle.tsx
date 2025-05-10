@@ -100,7 +100,7 @@ const MovingBackground: React.FC<MovingBackgroundProps> = ({
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
         });
-    }, [particles]);
+    }, [highlight, numParticles, particles, velocity]);
 
     return (
         <canvas

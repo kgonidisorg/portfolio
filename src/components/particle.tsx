@@ -16,17 +16,17 @@ const MovingBackground: React.FC<MovingBackgroundProps> = ({
     zIndex = 0,
 }: MovingBackgroundProps) => {
     const canvasRef = useRef<HTMLCanvasElement>(null);
-    const particles: { x: number; y: number; vx: number; vy: number }[] = [];
-    const maxDistance = 100;
     const mouseX = useRef(0);
     const mouseY = useRef(0);
 
     useEffect(() => {
+        const maxDistance = 100;
         const canvas = canvasRef.current!;
         const ctx = canvas.getContext("2d")!;
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
-
+        const particles: { x: number; y: number; vx: number; vy: number }[] =
+            [];
         // Initialize particles
         for (let i = 0; i < numParticles; i++) {
             particles.push({
@@ -100,7 +100,7 @@ const MovingBackground: React.FC<MovingBackgroundProps> = ({
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
         });
-    }, [highlight, numParticles, particles, velocity]);
+    }, [highlight, numParticles, velocity]);
 
     return (
         <canvas

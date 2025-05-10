@@ -33,3 +33,21 @@ jobs:
           platforms: linux/amd64,linux/arm64
           push: true
           tags: ghcr.io/kgonidis/portfolio:latest
+  
+  remote-execute:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Run pull_portfolio.sh on remote server
+        uses: appleboy/ssh-action@v0.1.0
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            cd /home/${{ secrets.SSH_USER }}
+            ./pull_portfolio.sh
+
+  
+      
+      

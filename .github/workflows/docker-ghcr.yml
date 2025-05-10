@@ -79,3 +79,18 @@ jobs:
             --amend ghcr.io/kgonidis/portfolio:amd64 \
             --amend ghcr.io/kgonidis/portfolio:arm64
           docker manifest push ghcr.io/kgonidis/portfolio:latest
+
+  remote-execute:
+    runs-on: ubuntu-latest
+    needs: merge-manifest
+
+    steps:
+      - name: Run pull_portfolio.sh on remote server
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            cd /home/${{ secrets.SSH_USER }}
+            ./pull_portfolio.sh

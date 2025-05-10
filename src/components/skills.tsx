@@ -1,125 +1,129 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
-import React, { useRef, useEffect } from "react";
+import React, { useMemo, useState } from "react";
+import { frameworks } from "./data";
+import { motion, LayoutGroup } from "framer-motion";
 
-const skills: Record<string, number> = {
-    Leadership: 85,
-    "Cloud Infrastructure (AWS, Azure, Google Cloud)": 88,
-    "Machine Learning Fundamentals": 78,
-    "Complex IoT Systems": 82,
-    "Frontend Development": 80,
-    "Backend Development": 82,
-    "Data Management": 76,
-    "DevOps Principles": 83,
-    "System Design": 79,
-    "Agile Practices": 84,
-    "Team Coordination": 81,
-};
-
-const getColor = (value: number): string => {
-    if (value >= 90)
-        return "bg-[var(--color-complementary-dark)] text-complementary-muted";
-    if (value >= 80)
-        return "bg-[var(--color-complementary-secondary)] text-complementary-dark";
-    if (value >= 70)
-        return "bg-[var(--color-complementary-accent)] text-complementary-dark";
-    return "bg-red-500 text-white";
-};
-
-const Skills: React.FC = () => {
-    const radiusBase = 300;
-    const radius_mult = 6;
-    const rad_omit = (50 * Math.PI) / 180;
-    const keys = Object.keys(skills);
-    const center = 400;
-    const canvasRef = useRef<HTMLCanvasElement>(null);
-
-    const key_rads = keys.map((skill, i) => {
-        const single_rad = (2 * Math.PI - 2 * rad_omit) / keys.length;
-        let angle: number;
-        if (i < keys.length / 4) {
-            angle = i * single_rad;
-        } else if (i < (keys.length * 3) / 4) {
-            angle = i * single_rad + rad_omit;
-        } else {
-            angle = i * single_rad + 2 * rad_omit;
-        }
-        const level = skills[keys[i]];
-        const radius = radiusBase + (level - 70) * radius_mult;
-        const x = Math.round(center + radius * Math.cos(angle));
-        const y = Math.round(center + radius * Math.sin(angle));
-
-        return { skill, x, y };
-    });
-
-    useEffect(() => {
-        const canvas = canvasRef.current;
-        if (!canvas) return;
-        const ctx = canvas.getContext("2d");
-        if (!ctx) return;
-
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.strokeStyle = getComputedStyle(document.documentElement)
-            .getPropertyValue("--color-complementary-secondary")
-            .trim();
-        ctx.lineWidth = 2;
-        ctx.setLineDash([4, 4]);
-        ctx.shadowColor = "rgba(0, 0, 0, 0.1)";
-        ctx.shadowBlur = 3;
-
-        key_rads.forEach(({ x, y }) => {
-            ctx.beginPath();
-            ctx.moveTo(center, center);
-            ctx.lineTo(x, y);
-            ctx.stroke();
-        });
-    }, [key_rads]);
+function CardSkill({ title, icon }: { title: string; icon: string }) {
+    const fadeInVariants = {
+        hidden: { opacity: 0, scale: 0.8 },
+        visible: {
+            opacity: 1,
+            scale: 1,
+            transition: { delay: Math.random() * 0.5, type: "spring" },
+        },
+    };
 
     return (
-        <section
-            id="skills"
-            className="min-h-screen bg-[var(--color-complementary-muted)] px-6 py-16 flex flex-col items-center justify-center"
+        <motion.div
+            variants={fadeInVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            className="w-50 flex flex-col items-center justify-center rounded-lg p-1 bg-gradient-to-r from-sky-500 to-red-500"
         >
-            <h2 className="text-4xl font-bold text-center text-[var(--color-complementary-dark)] mt-5">
-                Areas of Focus
-            </h2>
-            <div className="relative w-[800px] h-[800px] rounded-full">
-                {/* Canvas for lines */}
-                <canvas
-                    ref={canvasRef}
-                    width={800}
-                    height={800}
-                    className="absolute top-0 left-0 z-0"
+            <div className="flex flex-col items-center justify-center w-full h-full rounded-lg bg-gradient-to-b from-[#1a1a1a] to-[#1a1a1a] px-6 py-4">
+                <img
+                    src={`/icons/${icon}`}
+                    alt={title}
+                    className="h-16 w-16 mb-2"
                 />
-
-                {/* Center node */}
-                <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 px-10 py-6 bg-[var(--color-complementary-primary)] text-white rounded-full shadow-xl font-bold text-xl z-10 border-4 border-[var(--color-complementary-secondary)]">
-                    Skills
-                </div>
-
-                {/* Skill nodes */}
-                {key_rads.map(({ skill, x, y }) => {
-                    const level = skills[skill];
-                    return (
-                        <div
-                            key={skill}
-                            className={`absolute inline-block rounded-full shadow-lg text-sm font-semibold z-10 hover:scale-105 transition-transform duration-300 whitespace-nowrap px-4 py-2 ${getColor(
-                                level
-                            )}`}
-                            style={{
-                                left: `${x}px`,
-                                top: `${y}px`,
-                                transform: "translate(-50%, -50%)",
-                                boxShadow: "0 6px 12px rgba(0, 0, 0, 0.15)",
-                                border: "2px solid rgba(0, 0, 0, 0.05)"
-                            }}
-                        >
-                            {skill}
-                        </div>
-                    );
-                })}
+                <h3 className="text-white font-bold text-sm md:text-base">
+                    {title}
+                </h3>
             </div>
-        </section>
+        </motion.div>
+    );
+}
+
+const SkillsSection: React.FC = () => {
+    const [visibleGroup, setVisibleGroup] = useState<string | null>(null);
+    const groupKeys = useMemo(() => {
+        const frameworkKeys = Object.keys(frameworks);
+        return visibleGroup
+            ? [
+                  visibleGroup,
+                  ...frameworkKeys.filter((key) => key !== visibleGroup),
+              ]
+            : frameworkKeys;
+    }, [visibleGroup]);
+
+    function getGroupSkills(group: string) {
+        let keys = Object.keys(frameworks[group]);
+        if (group !== visibleGroup) keys = keys.slice(0, 4);
+        return keys.map((skill) => (
+            <CardSkill
+                key={skill}
+                title={skill}
+                icon={frameworks[group][skill]}
+            />
+        ));
+    }
+
+    return (
+        <LayoutGroup>
+            <motion.section
+                id="skills"
+                className="relative w-full min-h-screen px-6 pt-25"
+                layout
+                onViewportLeave={() => setVisibleGroup(null)}
+            >
+                <motion.h1
+                    layout
+                    className="text-accent text-4xl md:text-5xl font-bold col-span-3 text-center mb-5"
+                >
+                    Skills & Frameworks
+                </motion.h1>
+                <motion.div className="w-full h-fit grid grid-cols-3 grid-rows-2 gap-6">
+                    {groupKeys.map((group) => (
+                        <motion.div
+                            key={group}
+                            layout
+                            onClick={() => {
+                                setVisibleGroup(
+                                    visibleGroup === group ? null : group
+                                );
+                                if (visibleGroup !== group) {
+                                    setTimeout(() => {
+                                        document
+                                            .getElementById(group)
+                                            ?.scrollIntoView({
+                                                behavior: "smooth",
+                                                block: "center",
+                                                inline: "center",
+                                            });
+                                    }, 100);
+                                }
+                            }}
+                            id={group}
+                            className={`relative rounded-lg flex flex-col py-5 items-center justify-center cursor-pointer hover:ring-4 hover:ring-sky-400 transition-all ${
+                                visibleGroup === group
+                                    ? "col-span-3 row-span-2"
+                                    : ""
+                            }`}
+                        >
+                            <motion.h3
+                                layout
+                                className="font-bold mb-2 text-sm md:text-base"
+                            >
+                                {group}
+                            </motion.h3>
+                            <motion.div
+                                layout
+                                className={`grid ${
+                                    visibleGroup === group
+                                        ? "grid-cols-6"
+                                        : "grid-cols-2"
+                                } gap-2`}
+                            >
+                                {getGroupSkills(group)}
+                            </motion.div>
+                        </motion.div>
+                    ))}
+                </motion.div>
+            </motion.section>
+        </LayoutGroup>
     );
 };
 
-export default Skills;
+export default SkillsSection;

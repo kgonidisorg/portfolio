@@ -1,54 +1,146 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 import React from "react";
+import { projects, frameworks, Project } from "./data";
+import { FaGithub } from "react-icons/fa";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { EffectCoverflow, Navigation, Pagination } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/effect-coverflow";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
 
-const projects = [
-  {
-    title: "Big Data Pipeline",
-    front: "EV Charging Data & ML",
-    back: "Designed a scalable pipeline for energy systems with ML-driven anomaly & fraud detection. Delivered dashboards and a mobile app."
-  },
-  {
-    title: "EV Charge Controller",
-    front: "Smart Grid Integration",
-    back: "Led launch of charge controllers connected to Ford's network and utility grid services, enabling grants and strategic wins."
-  },
-  {
-    title: "Urban Rail Positioning",
-    front: "Real-time Train Analytics",
-    back: "Built system to track 100+ trains with ML-enhanced positioning and safety metrics. Reduced downtime, improved maintenance, and security."
-  },
-  {
-    title: "Jira Transformation",
-    front: "Agile Multi-Team Sync",
-    back: "Integrated Jira across departments with Agile best practices. Boosted executive reporting and cross-team visibility."
-  }
-];
+const frameworkSkills = Object.keys(frameworks).reduce<string[]>((acc, key) => {
+    const skills = Object.keys(frameworks[key]);
+    skills.forEach((skill) => {
+        if (!acc.includes(skill)) {
+            acc.push(skill);
+        }
+    });
+    return acc;
+}, []);
 
-const Projects: React.FC = () => {
-  return (
-    <section id="projects" className="min-h-screen bg-gray-50 py-2 px-6 flex flex-col items-center justify-center">
-        <h2 className="text-4xl font-bold text-gray-800 mb-12">Project Success Stories</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-12">
-            {projects.map((project, i) => (
-                <div
-                    key={i}
-                    className="group perspective w-80 h-60 [transform-style:preserve-3d] hover:[transform:rotateY(180deg)] transition-transform duration-700 relative"
-                >
-                    {/* Front */}
-                    <div className="absolute w-full h-full rounded-xl bg-gray-700 text-gray-100 flex flex-col items-center justify-center text-center shadow-2xl transform transition-transform duration-700 [backface-visibility:hidden] border border-gray-600">
-                        <h3 className="text-xl font-bold mb-2">{project.title}</h3>
-                        <p className="text-md italic text-gray-300">{project.front}</p>
+const ProjectsPage: React.FC = () => {
+    const projectsValues = Object.values(projects);
+
+    return (
+        <section
+            id="projects"
+            className="w-full min-h-screen text-white flex flex-col pt-25 py-6"
+        >
+            <h2 className="text-accent text-4xl md:text-5xl font-bold col-span-3 text-center mb-30">
+                Projects
+            </h2>
+
+            <div className="w-full flex flex-col gap-40">
+                {projectsValues.map((project: Project, index: number) => (
+                    <div
+                        key={project.title}
+                        className={`w-full flex flex-col ${
+                            index % 2 === 0
+                                ? "md:flex-row"
+                                : "md:flex-row-reverse"
+                        } rounded-lg overflow-hidden shadow-lg`}
+                    >
+                        {/* Image Carousel */}
+                        <div className="md:flex-none w-full md:w-2/3">
+                            <div className="flex items-center justify-center h-full px-10">
+                                <Swiper
+                                    effect="coverflow"
+                                    grabCursor
+                                    centeredSlides
+                                    slidesPerView="auto"
+                                    coverflowEffect={{
+                                        rotate: 50,
+                                        stretch: 0,
+                                        depth: 100,
+                                        modifier: 1,
+                                        slideShadows: true,
+                                    }}
+                                    navigation
+                                    pagination={{ clickable: true }}
+                                    modules={[
+                                        EffectCoverflow,
+                                        Navigation,
+                                        Pagination,
+                                    ]}
+                                    className="h-150"
+                                >
+                                    {project.images.map(
+                                        (image: string, idx: number) => (
+                                            <SwiperSlide
+                                                key={idx}
+                                                className="w-80 h-96"
+                                            >
+                                                <img
+                                                    src={image}
+                                                    alt={`${project.title} ${
+                                                        idx + 1
+                                                    }`}
+                                                    className="object-cover w-full rounded"
+                                                />
+                                            </SwiperSlide>
+                                        )
+                                    )}
+                                </Swiper>
+                            </div>
+                        </div>
+
+                        <span className="flex-1" />
+
+                        {/* Project Info */}
+                        <div className="w-full md:w-1/3 p-6 flex flex-col justify-between">
+                            <div>
+                                <h3 className="text-3xl font-semibold mb-4">
+                                    {project.title}
+                                </h3>
+                                <p className="mb-4">{project.description}</p>
+
+                                {/* Skills + Icons */}
+                                <div className="flex flex-wrap gap-3 mb-4">
+                                    {project.skills.map((skill: string) => {
+                                        let url: string | null = null;
+                                        for (const group in frameworks) {
+                                            url = frameworks[group][skill];
+                                            if (url) break;
+                                        }
+
+                                        return (
+                                            <div
+                                                key={skill}
+                                                className="flex items-center gap-2 bg-slate-700 px-3 py-1 rounded-full text-sm"
+                                            >
+                                                {url && (
+                                                    <img
+                                                        src={`icons/${url}`}
+                                                        alt={skill}
+                                                        className="w-5 h-5"
+                                                    />
+                                                )}
+                                                <span>{skill}</span>
+                                            </div>
+                                        );
+                                    })}
+                                </div>
+                            </div>
+
+                            {/* GitHub Button */}
+                            {project.github && (
+                                <a
+                                    href={project.github}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="inline-flex items-center px-4 py-2 bg-sky-500 text-white rounded hover:bg-sky-600 transition"
+                                >
+                                    <FaGithub className="mr-2" /> View on GitHub
+                                </a>
+                            )}
+                        </div>
                     </div>
-
-                    {/* Back */}
-                    <div className="absolute w-full h-full rounded-xl bg-gray-100 text-gray-800 flex items-center justify-center text-center px-6 shadow-2xl transform rotate-y-180 transition-transform duration-700 [backface-visibility:hidden] border border-gray-300">
-                        <p className="text-md font-medium leading-relaxed">{project.back}</p>
-                    </div>
-                </div>
-            ))}
-        </div>
-    </section>
-  );
+                ))}
+            </div>
+        </section>
+    );
 };
 
-export default Projects;
+export default ProjectsPage;

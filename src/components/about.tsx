@@ -5,7 +5,7 @@ const About = () => {
     return (
         <section
             id="about"
-            className="min-h-screen bg-primary text-white px-6 py-16 flex flex-col md:flex-row items-center justify-center gap-10"
+            className="min-h-screen  text-white px-6 py-16 flex flex-col md:flex-row items-center justify-center gap-10"
         >
             <div className="md:w-1/2 flex justify-center">
                 <img
@@ -17,21 +17,17 @@ const About = () => {
                 />
             </div>
 
-            <div className="md:w-1/2 space-y-6 text-center md:text-left">
+            <div className="md:w-1/2 space-y-6 text-center md:text-left pr-30">
                 <h2 className="text-4xl font-bold text-accent">About Me</h2>
                 <p className="text-lg leading-relaxed">
-                    I&apos;m Kiron Gonidis — a software architect, cloud
-                    engineer, and machine learning specialist with over 15 years
-                    of experience. I’ve led teams and designed systems across
-                    energy infrastructure, urban rail, and embedded IoT, always
-                    focusing on reliability, scale, and innovation.
-                </p>
-                <p className="text-lg leading-relaxed">
-                    I build platforms that integrate cloud, ML, and embedded
-                    hardware — thriving at the intersection of big ideas and
-                    real-world implementation. I&apos;m currently exploring
-                    opportunities to build the next generation of intelligent,
-                    connected systems.
+                    I’m a <strong>senior full stack developer</strong> passionate
+                    about building fast, scalable web applications and cloud systems
+                    that make an impact. From designing intuitive <strong>frontend</strong> 
+                    experiences to architecting resilient <strong>backend</strong> solutions, 
+                    I specialize in creating infrastructure that scales seamlessly. 
+                    I thrive on solving complex challenges — blending <strong>cloud</strong>, 
+                    <strong>IoT</strong>, and modern development practices to deliver 
+                    innovative and reliable software solutions.
                 </p>
             </div>
         </section>

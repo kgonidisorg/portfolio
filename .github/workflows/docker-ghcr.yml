@@ -36,6 +36,7 @@ jobs:
   
   remote-execute:
     runs-on: ubuntu-latest
+    needs: docker
 
     steps:
       - name: Run pull_portfolio.sh on remote server

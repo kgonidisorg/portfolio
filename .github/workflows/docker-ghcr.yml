@@ -102,6 +102,6 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
+            cd /home/${{ secrets.SSH_USER }}/bash_scripts/cloud_server
             docker login ghcr.io -u ${{ github.actor }} -p ${{ secrets.GHCR_TOKEN }}
-            cd /home/${{ secrets.SSH_USER }}
             ./pull_portfolio.sh

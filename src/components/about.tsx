@@ -5,21 +5,21 @@ const About = () => {
     return (
         <section
             id="about"
-            className="min-h-screen  text-white px-6 py-16 flex flex-col md:flex-row items-center justify-center gap-10"
+            className="min-h-screen text-white px-6 py-16 flex flex-col md:flex-row items-center justify-center gap-10"
         >
-            <div className="md:w-1/2 flex justify-center">
+            <div className="w-full md:w-1/2 flex justify-center">
                 <img
                     src="/profile.jpg"
                     alt="Kiron Gonidis"
                     className="rounded-full shadow-lg border-4 border-accent"
-                    width={320}
-                    height={320}
+                    width={240}
+                    height={240}
                 />
             </div>
 
-            <div className="md:w-1/2 space-y-6 text-center md:text-left pr-30">
-                <h2 className="text-4xl font-bold text-accent">About Me</h2>
-                <p className="text-lg leading-relaxed">
+            <div className="w-full md:w-1/2 space-y-6 text-center md:text-left">
+                <h2 className="text-3xl md:text-4xl font-bold text-accent">About Me</h2>
+                <p className="text-base md:text-lg leading-relaxed">
                     I’m a <strong>senior full stack developer</strong> passionate
                     about building fast, scalable web applications and cloud systems
                     that make an impact. From designing intuitive <strong>frontend</strong> 

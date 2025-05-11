@@ -1,15 +1,65 @@
 "use client";
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useMemo } from "react";
+import { useMediaQuery } from "react-responsive";
+
 export interface MovingBackgroundProps {
-    numParticles?: number;
+    hero?: boolean;
     highlight?: boolean;
     velocity?: number;
     fixed?: boolean;
     zIndex?: number;
 }
 
+const particleMap = {
+    Hero: {
+        small: 50,
+        medium: 75,
+        large: 100,
+        xl: 150,
+        xxl: 250,
+    },
+    Normal: {
+        small: 15,
+        medium: 20,
+        large: 25,
+        xl: 30,
+        xxl: 50,
+    },
+};
+
+function useParticleCount(hero: boolean) {
+    const isSmall = useMediaQuery({ query: "(max-width: 640px)" });
+    const isMedium = useMediaQuery({
+        query: "(min-width: 640px) and (max-width: 768px)",
+    });
+    const isLarge = useMediaQuery({
+        query: "(min-width: 768px) and (max-width: 1024px)",
+    });
+    const isXLarge = useMediaQuery({
+        query: "(min-width: 1024px) and (max-width: 1280px)",
+    });
+    const isXXLarge = useMediaQuery({ query: "(min-width: 1280px)" });
+
+    return useMemo(() => {
+        if (hero) {
+            if (isSmall) return particleMap.Hero.small;
+            if (isMedium) return particleMap.Hero.medium;
+            if (isLarge) return particleMap.Hero.large;
+            if (isXLarge) return particleMap.Hero.xl;
+            if (isXXLarge) return particleMap.Hero.xxl;
+        }
+
+        if (isSmall) return particleMap.Normal.small;
+        if (isMedium) return particleMap.Normal.medium;
+        if (isLarge) return particleMap.Normal.large;
+        if (isXLarge) return particleMap.Normal.xl;
+        if (isXXLarge) return particleMap.Normal.xxl;
+        return particleMap.Normal.large; // Default value
+    }, [hero, isSmall, isMedium, isLarge, isXLarge, isXXLarge]);
+}
+
 const MovingBackground: React.FC<MovingBackgroundProps> = ({
-    numParticles = 300,
+    hero = true,
     highlight = true,
     velocity = 1.5,
     fixed = false,
@@ -18,6 +68,7 @@ const MovingBackground: React.FC<MovingBackgroundProps> = ({
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const mouseX = useRef(0);
     const mouseY = useRef(0);
+    const particleCount = useParticleCount(hero);
 
     useEffect(() => {
         const maxDistance = 100;
@@ -28,7 +79,7 @@ const MovingBackground: React.FC<MovingBackgroundProps> = ({
         const particles: { x: number; y: number; vx: number; vy: number }[] =
             [];
         // Initialize particles
-        for (let i = 0; i < numParticles; i++) {
+        for (let i = 0; i < particleCount; i++) {
             particles.push({
                 x: Math.random() * canvas.width,
                 y: Math.random() * canvas.height,
@@ -61,8 +112,8 @@ const MovingBackground: React.FC<MovingBackgroundProps> = ({
 
             // Draw connections
             if (highlight) {
-                for (let i = 0; i < numParticles; i++) {
-                    for (let j = i + 1; j < numParticles; j++) {
+                for (let i = 0; i < particleCount; i++) {
+                    for (let j = i + 1; j < particleCount; j++) {
                         const dx = particles[i].x - particles[j].x;
                         const dy = particles[i].y - particles[j].y;
                         const dist = Math.sqrt(dx * dx + dy * dy);
@@ -100,7 +151,7 @@ const MovingBackground: React.FC<MovingBackgroundProps> = ({
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
         });
-    }, [highlight, numParticles, velocity]);
+    }, [highlight, particleCount, velocity]);
 
     return (
         <canvas

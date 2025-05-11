@@ -28,13 +28,13 @@ const ProjectsPage: React.FC = () => {
                         key={project.title}
                         className={`w-full flex flex-col ${
                             index % 2 === 0
-                                ? "md:flex-row"
-                                : "md:flex-row-reverse"
-                        } rounded-lg overflow-hidden shadow-lg`}
+                                ? "lg:flex-row"
+                                : "lg:flex-row-reverse"
+                        } rounded-lg overflow-hidden shadow-lg lg:h-3/4`}
                     >
                         {/* Image Carousel */}
-                        <div className="md:flex-none w-full md:w-2/3">
-                            <div className="flex items-center justify-center h-full px-10">
+                        <div className="md:flex-none w-full lg:w-2/3">
+                            <div className="flex items-center justify-center lg:h-full px-2 lg:px-10">
                                 <Swiper
                                     effect="coverflow"
                                     grabCursor
@@ -47,27 +47,27 @@ const ProjectsPage: React.FC = () => {
                                         modifier: 1,
                                         slideShadows: true,
                                     }}
-                                    navigation
                                     pagination={{ clickable: true }}
+                                    navigation
                                     modules={[
                                         EffectCoverflow,
                                         Navigation,
                                         Pagination,
                                     ]}
-                                    className="h-150"
+                                    className="mb-5 lg:mb-0 relative"
                                 >
                                     {project.images.map(
                                         (image: string, idx: number) => (
                                             <SwiperSlide
                                                 key={idx}
-                                                className="w-80 h-96"
+                                                className="w-64 h-64 md:w-80 md:h-96"
                                             >
                                                 <img
                                                     src={image}
                                                     alt={`${project.title} ${
                                                         idx + 1
                                                     }`}
-                                                    className="object-cover w-full rounded"
+                                                    className="object-cover w-full rounded cursor-pointer"
                                                 />
                                             </SwiperSlide>
                                         )
@@ -79,15 +79,17 @@ const ProjectsPage: React.FC = () => {
                         <span className="flex-1" />
 
                         {/* Project Info */}
-                        <div className="w-full md:w-1/3 p-6 flex flex-col justify-between">
+                        <div className="w-full lg:w-1/3 px-2 lg:px-6 flex flex-col justify-between">
                             <div>
-                                <h3 className="text-3xl font-semibold mb-4">
+                                <h3 className="text-2xl lg:text-3xl font-semibold mb-4">
                                     {project.title}
                                 </h3>
-                                <p className="mb-4">{project.description}</p>
+                                <p className="text-sm lg:text-base mb-4">
+                                    {project.description}
+                                </p>
 
                                 {/* Skills + Icons */}
-                                <div className="flex flex-wrap gap-3 mb-4">
+                                <div className="flex flex-wrap gap-2 md:gap-3 mb-4">
                                     {project.skills.map((skill: string) => {
                                         let url: string | null = null;
                                         for (const group in frameworks) {
@@ -98,13 +100,13 @@ const ProjectsPage: React.FC = () => {
                                         return (
                                             <div
                                                 key={skill}
-                                                className="flex items-center gap-2 bg-slate-700 px-3 py-1 rounded-full text-sm"
+                                                className="flex items-center gap-2 bg-slate-700 px-2 py-1 md:px-3 md:py-1 rounded-full text-xs md:text-sm"
                                             >
                                                 {url && (
                                                     <img
                                                         src={`icons/${url}`}
                                                         alt={skill}
-                                                        className="w-5 h-5"
+                                                        className="w-4 h-4 md:w-5 md:h-5"
                                                     />
                                                 )}
                                                 <span>{skill}</span>
@@ -120,7 +122,7 @@ const ProjectsPage: React.FC = () => {
                                     href={project.github}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="inline-flex items-center px-4 py-2 bg-sky-500 text-white rounded hover:bg-sky-600 transition"
+                                    className="inline-flex items-center px-3 py-2 md:px-4 md:py-2 bg-sky-500 text-white rounded hover:bg-sky-600 transition text-sm md:text-base"
                                 >
                                     <FaGithub className="mr-2" /> View on GitHub
                                 </a>

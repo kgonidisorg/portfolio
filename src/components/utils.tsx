@@ -9,6 +9,7 @@ export interface ScreenSize {
     isXL: boolean;
     is2XL: boolean;
     is3XL: boolean;
+    isMobile: boolean;
 }
 
 export function useScreenSize(): ScreenSize {
@@ -36,5 +37,6 @@ export function useScreenSize(): ScreenSize {
         window.addEventListener("resize", handleResize);
         return () => window.removeEventListener("resize", handleResize);
     }, []);
-    return { isXS, isSM, isMD, isLG, isXL, is2XL, is3XL };
+    const isMobile = isXS || isSM || isMD;
+    return { isXS, isSM, isMD, isLG, isXL, is2XL, is3XL, isMobile };
 }

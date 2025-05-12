@@ -124,3 +124,87 @@ This solution increased conversion rates, streamlined the purchase funnel, and d
         skills: ["AWS", "Kubernetes", "PostgreSQL", "Redis", "React.js"],
     },
 };
+
+const topSkills = [
+    // 🌐 Core Frontend
+    "HTML5",
+    "TypeScript",
+    "React.js",
+    "Next.js",
+    "Tailwind CSS",
+
+    // ⚙️ Core Backend
+    "Node.js",
+    "Express.js",
+    "Python",
+    "FastAPI",
+    "Django",
+
+    // 🗄️ Databases
+    "PostgreSQL",
+    "MongoDB",
+    "MySQL",
+    "Redis",
+
+    // ☁️ DevOps / Cloud
+    "Docker",
+    "GitHub Actions",
+    "CI/CD pipelines",
+    "AWS",
+
+    // 🛠 Tools / Productivity
+    "Git",
+    "GitHub",
+    "VS Code",
+
+    // ✅ Testing / Quality
+    "Jest",
+    "Cypress",
+
+    // 👇 Nice-to-haves / Secondary Frameworks
+    "Vue.js",
+    "Angular",
+    "Sass / SCSS",
+    "Bootstrap",
+    "GraphQL",
+    "Kubernetes",
+    "Terraform",
+    "Azure",
+    "Google Cloud",
+    "Java",
+    "Flask",
+    "Spring Boot",
+    ".NET Core",
+    "Ruby on Rails",
+    "C#",
+    "Go",
+    "Rust",
+    "C++",
+    "ElasticSearch",
+    "GitLab",
+    "Bitbucket",
+    "Webpack",
+    "Vite",
+    "ESLint",
+    "Vim / NeoVim",
+    "Mocha",
+    "Playwright",
+    "Selenium",
+];
+
+export const SortedSkills = topSkills.flatMap((skill) => {
+    const group = Object.entries(frameworks).find(([, skills]) =>
+        skills[skill]
+            ? true
+            : Object.keys(skills).some(
+                  (k) => k.toLowerCase() === skill.toLowerCase()
+              )
+    );
+    return group
+        ? {
+              title: skill,
+              icon: frameworks[group[0]][skill],
+              group: group[0],
+          }
+        : [];
+});

@@ -70,6 +70,10 @@ jobs:
           cache-from: type=local,src=/tmp/buildx-cache
           cache-to: type=local,dest=/tmp/buildx-cache,mode=max
           provenance: false
+      
+      - name: Prune cache
+        run: |
+          docker buildx prune --all --filter "until=24h" || true
 
   merge-manifest:
     runs-on: ubuntu-latest

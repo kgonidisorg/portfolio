@@ -27,30 +27,15 @@ const Navbar: React.FC = () => {
                     <span className="text-lg font-bold">Kiron Gonidis</span>
                 </div>
                 <div className="hidden md:flex space-x-6">
-                    <button
-                        onClick={() => handleScroll("about")}
-                        className="hover:text-accent transition-colors"
-                    >
-                        About
-                    </button>
-                    <button
-                        onClick={() => handleScroll("skills")}
-                        className="hover:text-accent transition-colors"
-                    >
-                        Skills
-                    </button>
-                    <button
-                        onClick={() => handleScroll("projects")}
-                        className="hover:text-accent transition-colors"
-                    >
-                        Projects
-                    </button>
-                    <button
-                        onClick={() => handleScroll("contact")}
-                        className="hover:text-accent transition-colors"
-                    >
-                        Contact
-                    </button>
+                    {["about", "skills", "projects", "contact"].map((section) => (
+                        <button
+                            key={section}
+                            onClick={() => handleScroll(section)}
+                            className="hover:text-accent transition-colors cursor-pointer"
+                        >
+                            {section.charAt(0).toUpperCase() + section.slice(1)}
+                        </button>
+                    ))}
                 </div>
                 <div className="md:hidden">
                     <button

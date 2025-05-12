@@ -19,7 +19,7 @@ const Hero: React.FC = () => {
                             aboutSection.scrollIntoView({ behavior: "smooth" });
                         }
                     }}
-                    className="mt-6 px-6 py-3 border border-accent text-accent rounded-lg shadow hover:bg-accent hover:text-primary transition"
+                    className="mt-6 px-6 py-3 border border-accent text-accent shadow hover:border-white hover:text-white transition cursor-pointer"
                 >
                     Learn More
                 </button>

@@ -48,13 +48,32 @@ const ProjectsPage: React.FC = () => {
                                         slideShadows: true,
                                     }}
                                     pagination={{ clickable: true }}
-                                    navigation
+                                    navigation={{
+                                        prevEl: ".swiper-button-prev",
+                                        nextEl: ".swiper-button-next",
+                                    }}
                                     modules={[
                                         EffectCoverflow,
                                         Navigation,
                                         Pagination,
                                     ]}
                                     className="mb-5 lg:mb-0 relative"
+                                    onClick={(swiper, e) => {
+                                        const rect =
+                                            swiper.el.getBoundingClientRect();
+                                        let clickX = 0;
+                                        if ("clientX" in e) {
+                                            clickX = e.clientX - rect.left;
+                                        } else {
+                                            return;
+                                        }
+
+                                        if (clickX > rect.width / 2) {
+                                            swiper.slideNext();
+                                        } else {
+                                            swiper.slidePrev();
+                                        }
+                                    }}
                                 >
                                     {project.images.map(
                                         (image: string, idx: number) => (
@@ -72,6 +91,8 @@ const ProjectsPage: React.FC = () => {
                                             </SwiperSlide>
                                         )
                                     )}
+                                    <div className="swiper-button-prev swiper-hidden"></div>
+                                    <div className="swiper-button-next swiper-hidden"></div>
                                 </Swiper>
                             </div>
                         </div>

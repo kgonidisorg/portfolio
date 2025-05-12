@@ -46,8 +46,8 @@ function CardSkill({
                     translate: isHex ? translate : undefined,
                 }}
             >
-                <div className="absolute inset-0 hidden lg:block clip-hexagon bg-gradient-to-r from-sky-500 to-red-500" />
-                <div className="absolute inset-1 hidden clip-hexagon bg-gradient-to-b from-[#1a1a1a] to-[#1a1a1a] z-10 lg:flex flex-col items-center justify-center text-center">
+                <div className="absolute inset-0 hidden lg:block clip-hexagon bg-gradient-to-r from-accent to-primary" />
+                <div className="absolute inset-1 hidden clip-hexagon bg-gradient-to-b from-[#1a1a1a] to-[#0a0a0a] z-10 lg:flex flex-col items-center justify-center text-center">
                     <img
                         src={`/icons/${icon}`}
                         alt={title}
@@ -62,8 +62,8 @@ function CardSkill({
                 </div>
 
                 {/* Fallback for non-hex on smaller screens */}
-                <div className="lg:hidden w-full flex flex-col items-center justify-center bg-gradient-to-r from-sky-500 to-red-500 rounded-lg p-1">
-                    <div className="flex flex-col items-center justify-center w-full h-full rounded-lg bg-gradient-to-b from-[#1a1a1a] to-[#1a1a1a] px-4 py-3">
+                <div className="lg:hidden w-full flex flex-col items-center justify-center bg-gradient-to-r from-accent to-primary rounded-lg p-1">
+                    <div className="flex flex-col items-center justify-center w-full h-full rounded-lg bg-gradient-to-b from-[#1a1a1a] to-[#0a0a0a] px-4 py-3">
                         <img
                             src={`/icons/${icon}`}
                             alt={title}

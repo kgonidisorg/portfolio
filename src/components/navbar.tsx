@@ -1,17 +1,20 @@
 "use client";
 import React from "react";
-import { useMediaQuery } from "react-responsive";
+import { useScreenSize } from "./utils";
 
 const Navbar: React.FC = () => {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
-    const isMobile = useMediaQuery({ query: "(max-width: 768px)" });
+    const { isMobile } = useScreenSize();
     const scrollby = 150; // Adjust this value to change the scroll offset
 
     const handleScroll = (sectionId: string) => {
         const section = document.getElementById(sectionId);
         if (section) {
             const yOffset = isMobile ? -scrollby : 0; // Adjust for mobile
-            const y = section.getBoundingClientRect().top + window.pageYOffset + yOffset;
+            const y =
+                section.getBoundingClientRect().top +
+                window.pageYOffset +
+                yOffset;
             window.scrollTo({ top: y, behavior: "smooth" });
         }
         setIsMobileMenuOpen(false); // Close menu on navigation
@@ -27,15 +30,18 @@ const Navbar: React.FC = () => {
                     <span className="text-lg font-bold">Kiron Gonidis</span>
                 </div>
                 <div className="hidden md:flex space-x-6">
-                    {["about", "skills", "projects", "contact"].map((section) => (
-                        <button
-                            key={section}
-                            onClick={() => handleScroll(section)}
-                            className="hover:text-accent transition-colors cursor-pointer"
-                        >
-                            {section.charAt(0).toUpperCase() + section.slice(1)}
-                        </button>
-                    ))}
+                    {["about", "skills", "projects", "contact"].map(
+                        (section) => (
+                            <button
+                                key={section}
+                                onClick={() => handleScroll(section)}
+                                className="hover:text-accent transition-colors cursor-pointer"
+                            >
+                                {section.charAt(0).toUpperCase() +
+                                    section.slice(1)}
+                            </button>
+                        )
+                    )}
                 </div>
                 <div className="md:hidden">
                     <button

@@ -1,6 +1,6 @@
 "use client";
 import React, { useRef, useEffect, useMemo } from "react";
-import { useMediaQuery } from "react-responsive";
+import { useScreenSize } from "./utils";
 
 export interface MovingBackgroundProps {
     hero?: boolean;
@@ -28,34 +28,24 @@ const particleMap = {
 };
 
 function useParticleCount(hero: boolean) {
-    const isSmall = useMediaQuery({ query: "(max-width: 640px)" });
-    const isMedium = useMediaQuery({
-        query: "(min-width: 640px) and (max-width: 768px)",
-    });
-    const isLarge = useMediaQuery({
-        query: "(min-width: 768px) and (max-width: 1024px)",
-    });
-    const isXLarge = useMediaQuery({
-        query: "(min-width: 1024px) and (max-width: 1280px)",
-    });
-    const isXXLarge = useMediaQuery({ query: "(min-width: 1280px)" });
+    const { isSM, isMD, isLG, isXL, is2XL, is3XL } = useScreenSize();
 
     return useMemo(() => {
         if (hero) {
-            if (isSmall) return particleMap.Hero.small;
-            if (isMedium) return particleMap.Hero.medium;
-            if (isLarge) return particleMap.Hero.large;
-            if (isXLarge) return particleMap.Hero.xl;
-            if (isXXLarge) return particleMap.Hero.xxl;
+            if (isSM) return particleMap.Hero.small;
+            if (isMD) return particleMap.Hero.medium;
+            if (isLG) return particleMap.Hero.large;
+            if (isXL) return particleMap.Hero.xl;
+            if (is2XL || is3XL) return particleMap.Hero.xxl;
         }
 
-        if (isSmall) return particleMap.Normal.small;
-        if (isMedium) return particleMap.Normal.medium;
-        if (isLarge) return particleMap.Normal.large;
-        if (isXLarge) return particleMap.Normal.xl;
-        if (isXXLarge) return particleMap.Normal.xxl;
+        if (isSM) return particleMap.Normal.small;
+        if (isMD) return particleMap.Normal.medium;
+        if (isLG) return particleMap.Normal.large;
+        if (isXL) return particleMap.Normal.xl;
+        if (is2XL || is3XL) return particleMap.Normal.xxl;
         return particleMap.Normal.large; // Default value
-    }, [hero, isSmall, isMedium, isLarge, isXLarge, isXXLarge]);
+    }, [hero, isSM, isMD, isLG, isXL, is2XL, is3XL]);
 }
 
 const MovingBackground: React.FC<MovingBackgroundProps> = ({

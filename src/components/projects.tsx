@@ -1,3 +1,4 @@
+
 /* eslint-disable @next/next/no-img-element */
 "use client";
 import React from "react";
@@ -5,6 +6,7 @@ import { projects, frameworks, Project } from "./data";
 import { FaGithub } from "react-icons/fa";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { EffectCoverflow, Navigation, Pagination } from "swiper/modules";
+import { motion } from "framer-motion";
 import "swiper/css";
 import "swiper/css/effect-coverflow";
 import "swiper/css/navigation";
@@ -18,23 +20,32 @@ const ProjectsPage: React.FC = () => {
             id="projects"
             className="w-full min-h-screen text-white flex flex-col pt-25 py-6"
         >
-            <h2 className="text-accent text-4xl md:text-5xl font-bold col-span-3 text-center mb-30">
+            <motion.h2 
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6 }}
+                className="text-accent text-4xl md:text-5xl font-bold col-span-3 text-center mb-30"
+            >
                 Projects
-            </h2>
+            </motion.h2>
 
             <div className="w-full flex flex-col gap-40">
                 {projectsValues.map((project: Project, index: number) => (
-                    <div
+                    <motion.div
+                        initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        transition={{ duration: 0.8, delay: 0.2 }}
+                        viewport={{ once: true }}
                         key={project.title}
                         className={`w-full flex flex-col ${
                             index % 2 === 0
                                 ? "lg:flex-row"
                                 : "lg:flex-row-reverse"
-                        } rounded-lg overflow-hidden shadow-lg lg:h-3/4`}
+                        } rounded-lg overflow-hidden shadow-2xl lg:h-3/4 bg-gradient-to-br from-slate-800/50 to-slate-900/50 backdrop-blur-sm`}
                     >
                         {/* Image Carousel */}
-                        <div className="md:flex-none w-full lg:w-2/3">
-                            <div className="flex items-center justify-center lg:h-full px-2 lg:px-10">
+                        <div className="md:flex-none w-full lg:w-2/3 p-4">
+                            <div className="flex items-center justify-center lg:h-full">
                                 <Swiper
                                     effect="coverflow"
                                     grabCursor
@@ -48,32 +59,13 @@ const ProjectsPage: React.FC = () => {
                                         slideShadows: true,
                                     }}
                                     pagination={{ clickable: true }}
-                                    navigation={{
-                                        prevEl: ".swiper-button-prev",
-                                        nextEl: ".swiper-button-next",
-                                    }}
+                                    navigation
                                     modules={[
                                         EffectCoverflow,
                                         Navigation,
                                         Pagination,
                                     ]}
-                                    className="mb-5 lg:mb-0 relative"
-                                    onClick={(swiper, e) => {
-                                        const rect =
-                                            swiper.el.getBoundingClientRect();
-                                        let clickX = 0;
-                                        if ("clientX" in e) {
-                                            clickX = e.clientX - rect.left;
-                                        } else {
-                                            return;
-                                        }
-
-                                        if (clickX > rect.width / 2) {
-                                            swiper.slideNext();
-                                        } else {
-                                            swiper.slidePrev();
-                                        }
-                                    }}
+                                    className="rounded-lg shadow-xl"
                                 >
                                     {project.images.map(
                                         (image: string, idx: number) => (
@@ -83,34 +75,42 @@ const ProjectsPage: React.FC = () => {
                                             >
                                                 <img
                                                     src={image}
-                                                    alt={`${project.title} ${
-                                                        idx + 1
-                                                    }`}
-                                                    className="object-cover w-full rounded cursor-pointer"
+                                                    alt={`${project.title} ${idx + 1}`}
+                                                    className="object-cover w-full h-full rounded-lg transform hover:scale-105 transition-transform duration-300"
                                                 />
                                             </SwiperSlide>
                                         )
                                     )}
-                                    <div className="swiper-button-prev swiper-hidden"></div>
-                                    <div className="swiper-button-next swiper-hidden"></div>
                                 </Swiper>
                             </div>
                         </div>
 
-                        <span className="flex-1" />
-
                         {/* Project Info */}
-                        <div className="w-full lg:w-1/3 px-2 lg:px-6 flex flex-col justify-between">
+                        <div className="w-full lg:w-1/3 p-8 flex flex-col justify-between backdrop-blur-sm">
                             <div>
-                                <h3 className="text-2xl lg:text-3xl font-semibold mb-4">
+                                <motion.h3 
+                                    initial={{ opacity: 0 }}
+                                    whileInView={{ opacity: 1 }}
+                                    transition={{ delay: 0.4 }}
+                                    className="text-2xl lg:text-3xl font-semibold mb-4 text-accent"
+                                >
                                     {project.title}
-                                </h3>
-                                <p className="text-sm lg:text-base mb-4">
+                                </motion.h3>
+                                <motion.p 
+                                    initial={{ opacity: 0 }}
+                                    whileInView={{ opacity: 1 }}
+                                    transition={{ delay: 0.6 }}
+                                    className="text-sm lg:text-base mb-6 leading-relaxed"
+                                >
                                     {project.description}
-                                </p>
+                                </motion.p>
 
-                                {/* Skills + Icons */}
-                                <div className="flex flex-wrap gap-2 md:gap-3 mb-4">
+                                <motion.div 
+                                    initial={{ opacity: 0 }}
+                                    whileInView={{ opacity: 1 }}
+                                    transition={{ delay: 0.8 }}
+                                    className="flex flex-wrap gap-2 md:gap-3 mb-6"
+                                >
                                     {project.skills.map((skill: string) => {
                                         let url: string | null = null;
                                         for (const group in frameworks) {
@@ -119,9 +119,10 @@ const ProjectsPage: React.FC = () => {
                                         }
 
                                         return (
-                                            <div
+                                            <motion.div
+                                                whileHover={{ scale: 1.05 }}
                                                 key={skill}
-                                                className="flex items-center gap-2 bg-slate-700 px-2 py-1 md:px-3 md:py-1 rounded-full text-xs md:text-sm"
+                                                className="flex items-center gap-2 bg-accent/20 px-3 py-2 rounded-full text-xs md:text-sm hover:bg-accent/30 transition-colors"
                                             >
                                                 {url && (
                                                     <img
@@ -131,25 +132,29 @@ const ProjectsPage: React.FC = () => {
                                                     />
                                                 )}
                                                 <span>{skill}</span>
-                                            </div>
+                                            </motion.div>
                                         );
                                     })}
-                                </div>
+                                </motion.div>
                             </div>
 
-                            {/* GitHub Button */}
                             {project.github && (
-                                <a
+                                <motion.a
+                                    initial={{ opacity: 0 }}
+                                    whileInView={{ opacity: 1 }}
+                                    whileHover={{ scale: 1.05 }}
+                                    transition={{ delay: 1 }}
                                     href={project.github}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="inline-flex items-center px-3 py-2 md:px-4 md:py-2 bg-sky-500 text-white rounded hover:bg-sky-600 transition text-sm md:text-base"
+                                    className="inline-flex items-center px-6 py-3 bg-accent text-black font-semibold rounded-full hover:bg-accent/90 transition group"
                                 >
-                                    <FaGithub className="mr-2" /> View on GitHub
-                                </a>
+                                    <FaGithub className="mr-2 group-hover:rotate-12 transition-transform" /> 
+                                    View on GitHub
+                                </motion.a>
                             )}
                         </div>
-                    </div>
+                    </motion.div>
                 ))}
             </div>
         </section>

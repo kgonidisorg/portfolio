@@ -26,6 +26,7 @@ export const frameworks: Record<string, Record<string, string>> = {
         ".NET Core": "dot-net.svg",
         FastAPI: "fastapi.svg",
         GraphQL: "graphql.svg",
+        WebSockets: "websockets.svg",
     },
     Databases: {
         PostgreSQL: "postgresql.svg",
@@ -69,18 +70,29 @@ export interface Project {
     description: string;
     images: string[];
     skills: string[];
+    demo?: string;
     github?: string;
 }
 
 export const projects: Record<string, Project> = {
+    "Enterprise Energy Management System": {
+        title: "Enterprise Energy Management System",
+        description: `An Energy Management System (EMS) for a client managing sustainable energy infrastructure. This system ingested high-volume IoT data into AWS, processed it in Kubernetes (EKS), and exposed real-time dashboards and control panels via a secure, cloud-hosted web application. The EMS supported over 200 live systems, enabling real-time monitoring, maintenance, configuration. Key features included live data streaming via Server-Sent Events (SSE), virtual terminals over VPN, dynamic visual dashboards, and seamless integration with Redis, PostgreSQL, S3, and AWS Lambda.`,
+        images: [
+            "projects/ems1.png",
+            "projects/ems2.png",
+            "projects/ems3.png",
+            "projects/ems4.png",
+        ],
+        skills: ["AWS", "Kubernetes", "PostgreSQL", "Redis", "React.js"],
+        demo: "https://ems.kirongonidis.com",
+        github: "https://github.com/kgonidisorg/ems",
+    },
     "Next Generation Positioning System": {
         title: "Next Generation Positioning System",
         description: `A dynamic, map-friendly analytics dashboard for NGPS (Next-Gen Positioning System) using Next.js and SCSS.
-
 The overlay integrates seamlessly atop a Google Maps component, providing real-time visualizations of train sensor data.
-
 I architected the SCSS module structure with partials for variables, mixins, and component styles, enabling consistent theming and rapid iteration.
-
 The dashboard is fully responsive and supports easy customization via CSS Modules.`,
         images: [
             "projects/ngps1.png",
@@ -90,6 +102,30 @@ The dashboard is fully responsive and supports easy customization via CSS Module
         ],
         skills: ["Next.js", "React.js", "Python", "Azure", "PostgreSQL"],
         github: "https://github.com/kgonidis/ngps",
+    },
+    "Social Media Scheduler": {
+        title: "Social Media Scheduler",
+        description: `A full-stack social media scheduling platform that allows users to create, manage, and schedule posts across multiple social networks.
+The platform features a modern, responsive UI built with React.js and Tailwind CSS, providing an intuitive user experience.
+Users can connect their social media accounts, create posts with rich media support, and schedule them for future publication.
+The backend is powered by Node.js and Express.js, with a PostgreSQL database for data storage. The application uses JWT for secure user authentication and authorization.
+The platform supports real-time updates using WebSockets, allowing users to see scheduled posts and notifications instantly.
+This solution streamlines social media management, increases user engagement, and provides a scalable architecture for future feature expansion.`,
+        images: [
+            "projects/social1.png",
+            "projects/social2.png",
+            "projects/social3.png",
+            "projects/social4.png",
+        ],
+        skills: [
+            "React.js",
+            "Node.js",
+            "PostgreSQL",
+            "WebSockets",
+            "Tailwind CSS",
+        ],
+        demo: "https://ssync.kirongonidis.com",
+        github: "https://github.com/kgonidisorg/social-sync",
     },
     "Ecommerce Platform": {
         title: "Ecommerce Platform",
@@ -111,17 +147,6 @@ This solution increased conversion rates, streamlined the purchase funnel, and d
             "projects/shop4.png",
         ],
         skills: ["Stripe", "React.js", "Node.js", "AWS", "PostgreSQL"],
-    },
-    "Enterprise Energy Management System": {
-        title: "Enterprise Energy Management System",
-        description: `An Energy Management System (EMS) for a client managing sustainable energy infrastructure. This system ingested high-volume IoT data into AWS, processed it in Kubernetes (EKS), and exposed real-time dashboards and control panels via a secure, cloud-hosted web application. The EMS supported over 200 live systems, enabling real-time monitoring, maintenance, configuration. Key features included live data streaming via Server-Sent Events (SSE), virtual terminals over VPN, dynamic visual dashboards, and seamless integration with Redis, PostgreSQL, S3, and AWS Lambda.`,
-        images: [
-            "projects/ems1.png",
-            "projects/ems2.png",
-            "projects/ems3.png",
-            "projects/ems4.png",
-        ],
-        skills: ["AWS", "Kubernetes", "PostgreSQL", "Redis", "React.js"],
     },
 };
 

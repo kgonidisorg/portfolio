@@ -31,7 +31,7 @@ jobs:
           context: .
           platforms: linux/amd64
           push: true
-          tags: ghcr.io/kgonidisorg/portfolio:amd64
+          tags: ghcr.io/${{ github.repository }}:amd64
           provenance: false
 
   build-arm64:
@@ -56,7 +56,7 @@ jobs:
           context: .
           platforms: linux/arm64
           push: true
-          tags: ghcr.io/kgonidisorg/portfolio:arm64
+          tags: ghcr.io/${{ github.repository }}:arm64
           provenance: false
 
   merge-manifest:
@@ -73,10 +73,10 @@ jobs:
       - name: Create and push manifest
         run: |
           docker buildx create --use
-          docker manifest create ghcr.io/kgonidisorg/portfolio:latest \
-            --amend ghcr.io/kgonidisorg/portfolio:amd64 \
-            --amend ghcr.io/kgonidisorg/portfolio:arm64
-          docker manifest push ghcr.io/kgonidisorg/portfolio:latest
+          docker manifest create ghcr.io/${{ github.repository }}:latest \
+            --amend ghcr.io/${{ github.repository }}:amd64 \
+            --amend ghcr.io/${{ github.repository }}:arm64
+          docker manifest push ghcr.io/${{ github.repository }}:latest
 
   remote-execute:
     runs-on: ubuntu-latest

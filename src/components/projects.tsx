@@ -4,8 +4,6 @@ import React from "react";
 import { projects, frameworks, Project } from "./data";
 import {
     FaGithub,
-    FaArrowLeft,
-    FaArrowRight,
     FaChevronLeft,
     FaChevronRight,
 } from "react-icons/fa";

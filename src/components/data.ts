@@ -101,7 +101,8 @@ The dashboard is fully responsive and supports easy customization via CSS Module
             "projects/ngps4.png",
         ],
         skills: ["Next.js", "React.js", "Python", "Azure", "PostgreSQL"],
-        github: "https://github.com/kgonidis/ngps",
+        demo: "https://ngps.kirongonidis.com",
+        github: "https://github.com/kgonidisorg/ngps",
     },
     "Social Media Scheduler": {
         title: "Social Media Scheduler",

@@ -1,7 +1,7 @@
 version: '3'
 services:
-  app:
-    image: ghcr.io/kgonidisorg/portfolio:latest
-    container_name: portfolio
+  portfolio-manage:
+    image: ghcr.io/kgonidisorg/portfolio:manage
+    container_name: portfolio-manage
     ports:
-      - "3001:80"
+      - "3004:80"

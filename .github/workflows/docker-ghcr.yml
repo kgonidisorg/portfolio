@@ -93,6 +93,7 @@ jobs:
             git clone https://github.com/${{ github.repository }}.git || true
             cd $(basename "${{ github.repository }}")
             git pull
+            git checkout main
             docker login ghcr.io -u ${{ github.actor }} -p ${{ secrets.GITHUB_TOKEN }}
             docker compose pull
             docker compose up -d 
